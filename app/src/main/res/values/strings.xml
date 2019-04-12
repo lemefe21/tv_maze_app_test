@@ -2,4 +2,7 @@
     <string name="app_name">Tv Maze App</string>
     <string name="show_name">Show name</string>
     <string name="show_genres">Show genres</string>
+    <string name="error_server">Unfortunately the search has problems.</string>
+    <string name="error_network">Problem in connecting to the data network.</string>
+    <string name="error_unknown">Unfortunately the search has unknown issues.</string>
 </resources>
