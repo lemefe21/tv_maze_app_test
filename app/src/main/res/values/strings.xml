@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">TvMazeAppTest</string>
+    <string name="app_name">Tv Maze App</string>
+    <string name="show_name">Show name</string>
+    <string name="show_genres">Show genres</string>
 </resources>
