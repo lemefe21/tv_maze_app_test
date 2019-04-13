@@ -1,6 +1,7 @@
 package com.leme.tvmazeapptest.contract;
 
 import com.leme.tvmazeapptest.model.Show;
+import com.leme.tvmazeapptest.model.UserResponse;
 import com.leme.tvmazeapptest.view.MainActivity;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface MainContract {
     interface Service {
 
         interface RequestListener {
-            void success(List<Show> shows);
+            void success(List<UserResponse> response);
             void error(Throwable throwable);
         }
 
@@ -22,7 +23,7 @@ public interface MainContract {
 
         void showProgress();
         void hideProgress();
-        void setDataToRecyclerView(List<Show> shows);
+        void setDataToRecyclerView(List<UserResponse> response);
         void showError(int error);
 
     }

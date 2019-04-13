@@ -3,6 +3,7 @@ package com.leme.tvmazeapptest.presenter;
 import com.leme.tvmazeapptest.contract.MainContract;
 import com.leme.tvmazeapptest.handler.ExceptionHandler;
 import com.leme.tvmazeapptest.model.Show;
+import com.leme.tvmazeapptest.model.UserResponse;
 import com.leme.tvmazeapptest.service.MainService;
 import com.leme.tvmazeapptest.view.MainActivity;
 
@@ -22,9 +23,9 @@ public class MainPresenter implements MainContract.Presenter, MainContract.Servi
     }
 
     @Override
-    public void success(List<Show> shows) {
+    public void success(List<UserResponse> response) {
 
-        view.setDataToRecyclerView(shows);
+        view.setDataToRecyclerView(response);
         view.hideProgress();
 
     }

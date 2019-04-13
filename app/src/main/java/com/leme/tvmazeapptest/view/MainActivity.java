@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +14,7 @@ import com.leme.tvmazeapptest.R;
 import com.leme.tvmazeapptest.adapter.ShowItemAdapter;
 import com.leme.tvmazeapptest.contract.MainContract;
 import com.leme.tvmazeapptest.model.Show;
+import com.leme.tvmazeapptest.model.UserResponse;
 import com.leme.tvmazeapptest.presenter.MainPresenter;
 import com.leme.tvmazeapptest.utils.ShowUtils;
 
@@ -23,18 +23,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View {
+public class MainActivity extends AppCompatActivity implements MainContract.View, ShowItemAdapter.ShowItemAdapterOnClickHandle {
 
     private MainPresenter mPresenter;
     private ShowItemAdapter mAdapter;
 
-    @BindView(R.id.iv_image_no_internet)
+    @BindView(R.id.iv_main_image_no_internet)
     ImageView mImageViewNoInternet;
 
-    @BindView(R.id.pb_loading_indicator)
+    @BindView(R.id.pb_main_loading_indicator)
     ProgressBar mLoading;
 
-    @BindView(R.id.rv_shows)
+    @BindView(R.id.rv_main_shows)
     RecyclerView mRecyclerViewShows;
 
     @Override
@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void setDataToRecyclerView(List<Show> shows) {
-        mAdapter.setListData(shows);
+    public void setDataToRecyclerView(List<UserResponse> response) {
+        mAdapter.setListData(response);
     }
 
     @Override
@@ -93,5 +93,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.onDestroy();
+    }
+
+    @Override
+    public void onClick(Show showClicked) {
+        Toast.makeText(this, "Show id: " + showClicked.getId(), Toast.LENGTH_LONG).show();
     }
 }

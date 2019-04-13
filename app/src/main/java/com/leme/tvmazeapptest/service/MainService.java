@@ -4,6 +4,7 @@ import com.leme.tvmazeapptest.api.ApiClient;
 import com.leme.tvmazeapptest.api.ApiInterface;
 import com.leme.tvmazeapptest.contract.MainContract;
 import com.leme.tvmazeapptest.model.Show;
+import com.leme.tvmazeapptest.model.UserResponse;
 
 import java.util.List;
 
@@ -18,17 +19,17 @@ public class MainService implements MainContract.Service {
 
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
 
-        Call<List<Show>> callRequest = api.getShowList();
+        Call<List<UserResponse>> callRequest = api.getShowList();
 
-        callRequest.enqueue(new Callback<List<Show>>() {
+        callRequest.enqueue(new Callback<List<UserResponse>>() {
             @Override
-            public void onResponse(Call<List<Show>> call, Response<List<Show>> response) {
-                List<Show> showList = response.body();
-                request.success(showList);
+            public void onResponse(Call<List<UserResponse>> call, Response<List<UserResponse>> response) {
+                List<UserResponse> userResponse = response.body();
+                request.success(userResponse);
             }
 
             @Override
-            public void onFailure(Call<List<Show>> call, Throwable throwable) {
+            public void onFailure(Call<List<UserResponse>> call, Throwable throwable) {
                 request.error(throwable);
             }
         });
