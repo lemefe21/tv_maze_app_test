@@ -57,6 +57,16 @@ public class MainPresenter implements MainContract.Presenter, MainContract.Servi
     }
 
     @Override
+    public void requestNewQueryFromServer(String newQuery) {
+        view.showProgress();
+        try {
+            service.getShowsByQuery(this, newQuery);
+        } catch (Exception e) {
+            this.view.showError(ExceptionHandler.FormatErrorUi(e));
+        }
+    }
+
+    @Override
     public void goToDetailsActivity(MainActivity mainActivity, Show Show) {
 
     }

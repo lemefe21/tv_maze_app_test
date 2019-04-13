@@ -1,14 +1,20 @@
 package com.leme.tvmazeapptest.view;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.leme.tvmazeapptest.R;
@@ -63,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         setShowsLayoutManager();
 
+        handleIntent(getIntent());
+
     }
 
     private void setShowsLayoutManager() {
@@ -115,5 +123,31 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void onRefresh() {
         mPresenter.requestDataFromServer();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        return true;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String newQuery = intent.getStringExtra(SearchManager.QUERY);
+            mPresenter.requestNewQueryFromServer(newQuery);
+        }
     }
 }

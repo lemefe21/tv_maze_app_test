@@ -16,6 +16,7 @@ public interface MainContract {
         }
 
         void getShows(RequestListener request);
+        void getShowsByQuery(RequestListener request, String newQuery);
 
     }
 
@@ -32,8 +33,8 @@ public interface MainContract {
 
         void onDestroy();
         void requestDataFromServer();
+        void requestNewQueryFromServer(String newQuery);
         void goToDetailsActivity(MainActivity mainActivity, Show Show);
-
     }
 
 }
