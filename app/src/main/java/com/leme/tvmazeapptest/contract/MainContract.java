@@ -15,7 +15,6 @@ public interface MainContract {
             void error(Throwable throwable);
         }
 
-        void getShows(RequestListener request);
         void getShowsByQuery(RequestListener request, String newQuery);
 
     }
@@ -32,9 +31,9 @@ public interface MainContract {
     interface Presenter {
 
         void onDestroy();
-        void requestDataFromServer();
-        void requestNewQueryFromServer(String newQuery);
+        void requestDataFromServer(String query);
         void goToDetailsActivity(MainActivity mainActivity, Show Show);
+
     }
 
 }

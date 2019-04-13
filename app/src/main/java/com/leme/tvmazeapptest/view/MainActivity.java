@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -34,12 +33,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private MainPresenter mPresenter;
     private ShowItemAdapter mAdapter;
+    private String queryShowTvCategory = "cartoon";
 
     @BindView(R.id.iv_main_image_no_internet)
     ImageView mImageViewNoInternet;
-
-    @BindView(R.id.pb_main_loading_indicator)
-    ProgressBar mLoading;
 
     @BindView(R.id.rv_main_shows)
     RecyclerView mRecyclerViewShows;
@@ -51,7 +48,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         initUi();
+
     }
 
     private void initUi() {
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 R.color.colorPrimaryDark);
 
         mPresenter = new MainPresenter(this);
-        mPresenter.requestDataFromServer();
+        mPresenter.requestDataFromServer(queryShowTvCategory);
 
         setShowsLayoutManager();
 
@@ -88,14 +87,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void showProgress() {
         mRecyclerViewShows.setVisibility(View.GONE);
-        //mLoading.setVisibility(View.VISIBLE);
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
         mRecyclerViewShows.setVisibility(View.VISIBLE);
-        //mLoading.setVisibility(View.GONE);
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -122,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void onRefresh() {
-        mPresenter.requestDataFromServer();
+        mPresenter.requestDataFromServer(queryShowTvCategory);
     }
 
     @Override
@@ -146,8 +143,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private void handleIntent(Intent intent) {
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String newQuery = intent.getStringExtra(SearchManager.QUERY);
-            mPresenter.requestNewQueryFromServer(newQuery);
+            queryShowTvCategory = intent.getStringExtra(SearchManager.QUERY);
+            mPresenter.requestDataFromServer(queryShowTvCategory);
         }
     }
 }

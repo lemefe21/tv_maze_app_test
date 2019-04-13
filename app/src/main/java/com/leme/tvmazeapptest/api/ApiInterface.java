@@ -10,9 +10,6 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-    @GET("/search/shows?q=cartoon")
-    Call<List<UserResponse>> getShowList();
-
     @GET("/search/shows")
     Call<List<UserResponse>> getShowListByQuery(@Query("q") String newQuery);
 

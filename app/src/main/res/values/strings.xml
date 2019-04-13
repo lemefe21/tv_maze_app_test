@@ -6,5 +6,5 @@
     <string name="error_network">Problem in connecting to the data network.</string>
     <string name="error_unknown">Unfortunately the search has unknown issues.</string>
     <string name="search_title">Search</string>
-    <string name="search_hint">Find new category</string>
+    <string name="search_hint">Search tv show category</string>
 </resources>
