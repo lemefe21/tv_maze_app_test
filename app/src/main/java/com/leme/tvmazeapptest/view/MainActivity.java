@@ -1,5 +1,6 @@
 package com.leme.tvmazeapptest.view;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -23,7 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View, ShowItemAdapter.ShowItemAdapterOnClickHandle {
+public class MainActivity extends AppCompatActivity implements MainContract.View, ShowItemAdapter.ShowItemAdapterOnClickHandle, SwipeRefreshLayout.OnRefreshListener {
 
     private MainPresenter mPresenter;
     private ShowItemAdapter mAdapter;
@@ -37,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @BindView(R.id.rv_main_shows)
     RecyclerView mRecyclerViewShows;
 
+    @BindView(R.id.sr_main_list_show)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private void initUi() {
 
         ButterKnife.bind(this);
+
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
+                R.color.colorAccentDark,
+                R.color.colorPrimary,
+                R.color.colorPrimaryDark);
 
         mPresenter = new MainPresenter(this);
         mPresenter.requestDataFromServer();
@@ -70,13 +80,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void showProgress() {
         mRecyclerViewShows.setVisibility(View.GONE);
-        mLoading.setVisibility(View.VISIBLE);
+        //mLoading.setVisibility(View.VISIBLE);
+        mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
         mRecyclerViewShows.setVisibility(View.VISIBLE);
-        mLoading.setVisibility(View.GONE);
+        //mLoading.setVisibility(View.GONE);
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -98,5 +110,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void onClick(Show showClicked) {
         Toast.makeText(this, "Show id: " + showClicked.getId(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.requestDataFromServer();
     }
 }
