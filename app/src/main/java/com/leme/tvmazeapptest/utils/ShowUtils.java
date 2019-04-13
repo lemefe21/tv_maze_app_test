@@ -21,7 +21,7 @@ public class ShowUtils {
         for (String string : genres) {
             builder.append(string + " - ");
         }
-        if(genres.length > 1) {
+        if(genres.length >= 1) {
             genresToView = builder.substring(0, builder.length()-3);
         }
         return genresToView;
