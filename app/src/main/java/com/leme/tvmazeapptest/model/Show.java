@@ -34,6 +34,30 @@ public class Show implements Parcelable {
         this.summary = in.readString();
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String[] getGenres() {
+        return genres;
+    }
+
+    public String getPremiered() {
+        return premiered;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
     @Override
     public int describeContents() {
         return 0;

@@ -2,48 +2,61 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:background="@drawable/show_item_selection"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
 
     <ImageView
-        android:id="@+id/main_show_imageview_poster"
-        android:layout_width="wrap_content"
+        android:id="@+id/iv_main_show_poster"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/view_main_poster_divider"
         app:srcCompat="@drawable/poster_test" />
 
     <View
-        android:id="@+id/main_show_view_divider"
+        android:id="@+id/view_main_poster_divider"
         android:layout_width="0dp"
         android:layout_height="5dp"
         android:background="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_show_imageview_poster" />
+        app:layout_constraintTop_toBottomOf="@id/iv_main_show_poster" />
 
     <TextView
-        android:id="@+id/main_show_textview_name"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_main_show_name"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/show_name"
+        android:gravity="center_horizontal"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Seth MacFarlane's Cavalcade of Cartoon Comedy Seth MacFarlane's Cavalcade of Cartoon Comedy"
         android:textSize="16sp"
-        android:textStyle="bold"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_show_view_divider" />
+        app:layout_constraintTop_toBottomOf="@+id/view_main_poster_divider" />
 
     <TextView
-        android:id="@+id/main_show_textview_genres"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_main_show_genres"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_horizontal"
+        android:fontFamily="sans-serif-condensed"
         android:text="@string/show_genres"
-        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_show_textview_name" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_main_show_name" />
 
 </android.support.constraint.ConstraintLayout>
