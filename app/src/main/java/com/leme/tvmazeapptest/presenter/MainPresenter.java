@@ -1,17 +1,20 @@
 package com.leme.tvmazeapptest.presenter;
 
+import android.content.Intent;
+
 import com.leme.tvmazeapptest.contract.MainContract;
 import com.leme.tvmazeapptest.handler.ExceptionHandler;
 import com.leme.tvmazeapptest.model.Show;
 import com.leme.tvmazeapptest.model.UserResponse;
 import com.leme.tvmazeapptest.service.MainService;
 import com.leme.tvmazeapptest.view.MainActivity;
+import com.leme.tvmazeapptest.view.ShowDetailActivity;
 
 import java.util.List;
 
 public class MainPresenter implements MainContract.Presenter, MainContract.Service.RequestListener {
 
-    public static final String SHOW_EXTRA = "main_list_show_extra";
+    public static final String EXTRA_SHOW_KEY = "extra_show_key";
     private MainContract.View view;
     private MainContract.Service service;
 
@@ -57,7 +60,11 @@ public class MainPresenter implements MainContract.Presenter, MainContract.Servi
     }
 
     @Override
-    public void goToDetailsActivity(MainActivity mainActivity, Show Show) {
+    public void goToDetailsActivity(MainActivity mainActivity, Show show) {
+
+        Intent intent = new Intent(mainActivity, ShowDetailActivity.class);
+        intent.putExtra(EXTRA_SHOW_KEY, show);
+        mainActivity.startActivity(intent);
 
     }
 }

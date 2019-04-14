@@ -114,7 +114,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void onClick(Show showClicked) {
-        Toast.makeText(this, "Show id: " + showClicked.getId(), Toast.LENGTH_LONG).show();
+
+        mPresenter.goToDetailsActivity(this, showClicked);
+
     }
 
     @Override
