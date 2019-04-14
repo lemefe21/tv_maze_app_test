@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_tvmaze_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Forecast">
-        <activity android:name=".view.SplashScreenActivity"
+        <activity android:name=".view.DetailShowActivity"></activity>
+        <activity
+            android:name=".view.SplashScreenActivity"
             android:theme="@style/Theme.AppCompat.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,10 +25,10 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-
         </activity>
     </application>
 
