@@ -1,10 +1,12 @@
 package com.leme.tvmazeapptest.view;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leme.tvmazeapptest.R;
 import com.leme.tvmazeapptest.contract.ShowDetailContract;
@@ -55,11 +57,9 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
         }
 
         initUi();
-
     }
 
     private void initUi() {
-
         ButterKnife.bind(this);
 
         mDetailPresenter = new ShowDetailPresenter(this);
@@ -68,15 +68,9 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
         mViewFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mDetailPresenter.favoriteShow(ShowDetailActivity.this);
+                updateFavoriteShow();
             }
         });
-
-    }
-
-    @Override
-    public void updateFavoriteIconState(int resource) {
-        mImageViewIconFavorite.setImageResource(resource);
     }
 
     @Override
@@ -87,9 +81,6 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
 
     @Override
     public void setShowDetailData(Show show) {
-
-        //mImageViewIconFavorite
-
         Image image = show.getImage();
         String imageUrl = "no_image";
         if(image != null) {
@@ -113,6 +104,23 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
         mTextViewShowSummary.setText(show.getSummary());
         mTextViewShowPremiered.setText(show.getPremiered());
 
+        if(show.isFavorite()) {
+            favoriteShowIcon();
+        } else {
+            disfavorShowIcon();
+        }
+    }
+
+    @Override
+    public void favoriteShowIcon() {
+        mImageViewIconFavorite.setImageResource(R.drawable.ic_favorite_on);
+        Toast.makeText(this, "favoriteShow", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void disfavorShowIcon() {
+        mImageViewIconFavorite.setImageResource(R.drawable.ic_favorite_off);
+        Toast.makeText(this, "disfavorShow", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -120,4 +128,16 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
         super.onDestroy();
         mDetailPresenter.onDestroy();
     }
+
+    private void updateFavoriteShow() {
+        class UpdateTask extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                mDetailPresenter.favoriteShow(ShowDetailActivity.this);
+                return null;
+            }
+        }
+    }
+
 }

@@ -1,12 +1,18 @@
 package com.leme.tvmazeapptest.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class Show implements Parcelable {
 
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     @SerializedName("id")
     private long id;
 
@@ -24,6 +30,8 @@ public class Show implements Parcelable {
 
     @SerializedName("summary")
     private String summary;
+
+    private boolean isFavorite;
 
     public Show(Parcel in) {
         this.id = in.readLong();
@@ -56,6 +64,14 @@ public class Show implements Parcelable {
 
     public String getSummary() {
         return summary;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 
     @Override

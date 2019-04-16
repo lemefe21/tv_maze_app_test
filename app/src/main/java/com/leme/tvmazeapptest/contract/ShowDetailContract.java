@@ -8,12 +8,14 @@ import com.leme.tvmazeapptest.view.ShowDetailActivity;
 public interface ShowDetailContract {
 
     interface Service {
-        boolean updateFavoritedShowStatus(long id);
+        void deleteFavorite(Show show, ShowDetailActivity showDetailActivity);
+        void addFavorite(Show show, ShowDetailActivity showDetailActivity);
     }
 
     interface View {
         void setShowDetailData(Show show);
-        void updateFavoriteIconState(int resourceIcon);
+        void favoriteShowIcon();
+        void disfavorShowIcon();
     }
 
     interface Presenter {
