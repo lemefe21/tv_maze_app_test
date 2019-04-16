@@ -2,13 +2,14 @@ package com.leme.tvmazeapptest.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-@Entity
+@Entity(tableName = "show")
 public class Show implements Parcelable {
 
     @PrimaryKey
@@ -16,23 +17,34 @@ public class Show implements Parcelable {
     @SerializedName("id")
     private long id;
 
+    @Ignore
     @SerializedName("name")
     private String name;
 
+    @Ignore
     @SerializedName("genres")
     private String[] genres;
 
+    @Ignore
     @SerializedName("premiered")
     private String premiered;
 
+    @Ignore
     @SerializedName("image")
     private Image image;
 
+    @Ignore
     @SerializedName("summary")
     private String summary;
 
+    @Ignore
     private boolean isFavorite;
 
+    public Show(long id) {
+        this.id = id;
+    }
+
+    @Ignore
     public Show(Parcel in) {
         this.id = in.readLong();
         this.name = in.readString();
@@ -44,6 +56,10 @@ public class Show implements Parcelable {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

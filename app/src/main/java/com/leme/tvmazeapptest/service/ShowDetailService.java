@@ -8,13 +8,16 @@ import com.leme.tvmazeapptest.view.ShowDetailActivity;
 public class ShowDetailService implements ShowDetailContract.Service {
 
     @Override
-    public void deleteFavorite(Show show, ShowDetailActivity showDetailActivity) {
-        DatabaseClient.getInstance(showDetailActivity).getAppDatabase().showDao().delete(show);
+    public boolean deleteFavorite(Show show, ShowDetailActivity showDetailActivity) {
+        long deleteId = DatabaseClient.getInstance(showDetailActivity).getAppDatabase().showDao().delete(show);
+        return !(deleteId > 1);
+
     }
 
     @Override
-    public void addFavorite(Show show, ShowDetailActivity showDetailActivity) {
-        DatabaseClient.getInstance(showDetailActivity).getAppDatabase().showDao().insert(show);
+    public boolean addFavorite(Show show, ShowDetailActivity showDetailActivity) {
+        long insertId = DatabaseClient.getInstance(showDetailActivity).getAppDatabase().showDao().insert(show);
+        return insertId == show.getId();
     }
 
 }

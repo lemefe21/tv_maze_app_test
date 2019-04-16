@@ -3,8 +3,10 @@ package com.leme.tvmazeapptest.service;
 import com.leme.tvmazeapptest.api.ApiClient;
 import com.leme.tvmazeapptest.api.ApiInterface;
 import com.leme.tvmazeapptest.contract.MainContract;
+import com.leme.tvmazeapptest.database.DatabaseClient;
 import com.leme.tvmazeapptest.model.Show;
 import com.leme.tvmazeapptest.model.UserResponse;
+import com.leme.tvmazeapptest.view.MainActivity;
 
 import java.util.List;
 
@@ -34,6 +36,12 @@ public class MainService implements MainContract.Service {
             }
         });
 
+    }
+
+    @Override
+    public List<Show> getFavoritedShowsDb(MainActivity mainActivity) {
+        List<Show> allShows = DatabaseClient.getInstance(mainActivity).getAppDatabase().showDao().getAllShows();
+        return allShows;
     }
 
 }

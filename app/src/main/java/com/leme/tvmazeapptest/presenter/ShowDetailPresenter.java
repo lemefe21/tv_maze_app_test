@@ -32,14 +32,13 @@ public class ShowDetailPresenter implements ShowDetailContract.Presenter {
     }
 
     @Override
-    public void favoriteShow(ShowDetailActivity showDetailActivity) {
+    public boolean favoriteShow(ShowDetailActivity showDetailActivity) {
         if(show.isFavorite()) {
-            service.deleteFavorite(show, showDetailActivity);
-            view.disfavorShow();
+            show.setFavorite(service.deleteFavorite(show, showDetailActivity));
         } else {
-            service.addFavorite(show, showDetailActivity);
-            view.favoriteShow();
+            show.setFavorite(service.addFavorite(show, showDetailActivity));
         }
+        return show.isFavorite();
     }
 
 }

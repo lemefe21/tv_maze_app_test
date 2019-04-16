@@ -25,6 +25,7 @@ import butterknife.ButterKnife;
 public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowItemViewHolder> {
 
     private List<UserResponse> mShowList;
+    private List<Show> mFavoritedShows;
     private final ShowItemAdapterOnClickHandle mClickHandle;
     private Context mContext;
 
@@ -40,14 +41,13 @@ public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowIt
     @NonNull
     @Override
     public ShowItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.show_list_item, viewGroup, false);
         return new ShowItemViewHolder(view);
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull ShowItemViewHolder showItemViewHolder, int position) {
+        Log.i("mFavoritedShowsList", String.valueOf(mFavoritedShows.size()));
 
         Show show = mShowList.get(position).getShow();
         Image image = show.getImage();
@@ -65,7 +65,6 @@ public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowIt
 
         showItemViewHolder.mTextViewShowName.setText(show.getName());
         showItemViewHolder.mTextViewShowGenres.setText(ShowUtils.AppendGenresString(show.getGenres()));
-
     }
 
     @Override
@@ -74,8 +73,9 @@ public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowIt
         return mShowList.size();
     }
 
-    public void setListData(List<UserResponse> response) {
+    public void setListData(List<UserResponse> response, List<Show> favoritedShows) {
         mShowList = response;
+        mFavoritedShows = favoritedShows;
         notifyDataSetChanged();
     }
 
@@ -95,7 +95,6 @@ public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowIt
 
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
-
         }
 
         @Override

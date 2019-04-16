@@ -13,12 +13,12 @@ import java.util.List;
 public interface ShowDao {
 
     @Query("SELECT * FROM show")
-    List<Show> getAll();
+    List<Show> getAllShows();
 
     @Insert
-    void insert(Show show);
+    long insert(Show show);
 
     @Delete
-    void delete(Show show);
+    int delete(Show show);
 
 }

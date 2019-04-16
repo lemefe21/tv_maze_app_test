@@ -8,8 +8,8 @@ import com.leme.tvmazeapptest.view.ShowDetailActivity;
 public interface ShowDetailContract {
 
     interface Service {
-        void deleteFavorite(Show show, ShowDetailActivity showDetailActivity);
-        void addFavorite(Show show, ShowDetailActivity showDetailActivity);
+        boolean deleteFavorite(Show show, ShowDetailActivity showDetailActivity);
+        boolean addFavorite(Show show, ShowDetailActivity showDetailActivity);
     }
 
     interface View {
@@ -21,7 +21,7 @@ public interface ShowDetailContract {
     interface Presenter {
         void onDestroy();
         void getIntentExtras(Intent intent);
-        void favoriteShow(ShowDetailActivity showDetailActivity);
+        boolean favoriteShow(ShowDetailActivity showDetailActivity);
     }
 
 }

@@ -104,7 +104,11 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
         mTextViewShowSummary.setText(show.getSummary());
         mTextViewShowPremiered.setText(show.getPremiered());
 
-        if(show.isFavorite()) {
+        setFavoritedIcon(show.isFavorite());
+    }
+
+    private void setFavoritedIcon(boolean isFavorite) {
+        if(isFavorite) {
             favoriteShowIcon();
         } else {
             disfavorShowIcon();
@@ -114,13 +118,11 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
     @Override
     public void favoriteShowIcon() {
         mImageViewIconFavorite.setImageResource(R.drawable.ic_favorite_on);
-        Toast.makeText(this, "favoriteShow", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void disfavorShowIcon() {
         mImageViewIconFavorite.setImageResource(R.drawable.ic_favorite_off);
-        Toast.makeText(this, "disfavorShow", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -130,14 +132,23 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
     }
 
     private void updateFavoriteShow() {
-        class UpdateTask extends AsyncTask<Void, Void, Void> {
+        class UpdateTask extends AsyncTask<Void, Void, Boolean> {
 
             @Override
-            protected Void doInBackground(Void... voids) {
-                mDetailPresenter.favoriteShow(ShowDetailActivity.this);
-                return null;
+            protected Boolean doInBackground(Void... voids) {
+                return mDetailPresenter.favoriteShow(ShowDetailActivity.this);
+            }
+
+            @Override
+            protected void onPostExecute(Boolean favorited) {
+                super.onPostExecute(favorited);
+                setFavoritedIcon(favorited);
+                Toast.makeText(ShowDetailActivity.this, "onPostExecute", Toast.LENGTH_LONG).show();
             }
         }
+
+        UpdateTask updateTask = new UpdateTask();
+        updateTask.execute();
     }
 
 }

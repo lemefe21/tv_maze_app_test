@@ -3,6 +3,7 @@ package com.leme.tvmazeapptest.view;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,11 +51,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         setContentView(R.layout.activity_main);
 
         initUi();
-
     }
 
     private void initUi() {
-
         ButterKnife.bind(this);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -64,16 +63,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 R.color.colorPrimaryDark);
 
         mPresenter = new MainPresenter(this);
-        mPresenter.requestDataFromServer(queryShowTvCategory);
+
+        getAllFavoritedShowAndRequestData();
 
         setShowsLayoutManager();
 
         handleIntent(getIntent());
-
     }
 
     private void setShowsLayoutManager() {
-
         Display display = getWindowManager().getDefaultDisplay();
         int numberOfColumns = ShowUtils.calculateBestSpanCount(display);
 
@@ -81,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mRecyclerViewShows.setLayoutManager(layoutManager);
         mAdapter = new ShowItemAdapter(this,this);
         mRecyclerViewShows.setAdapter(mAdapter);
-
     }
 
     @Override
@@ -97,13 +94,19 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void setDataToRecyclerView(List<UserResponse> response) {
-        mAdapter.setListData(response);
+    public void setDataToRecyclerView(List<UserResponse> response, List<Show> favoritedShows) {
+        mAdapter.setListData(response, favoritedShows);
     }
 
     @Override
     public void showError(int error) {
         Toast.makeText(this, getString(error), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -114,14 +117,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void onClick(Show showClicked) {
-
         mPresenter.goToDetailsActivity(this, showClicked);
-
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.requestDataFromServer(queryShowTvCategory);
+        getAllFavoritedShowAndRequestData();
     }
 
     @Override
@@ -143,10 +144,35 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void handleIntent(Intent intent) {
-
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             queryShowTvCategory = intent.getStringExtra(SearchManager.QUERY);
             mPresenter.requestDataFromServer(queryShowTvCategory);
         }
     }
+
+    private void getAllFavoritedShowAndRequestData() {
+        class ShowTask extends AsyncTask<Void, Void, Void> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                showProgress();
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                mPresenter.getFavoritedShows(MainActivity.this);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                mPresenter.requestDataFromServer(queryShowTvCategory);
+            }
+        }
+
+        ShowTask showTask = new ShowTask();
+        showTask.execute();
+    }
+
 }
