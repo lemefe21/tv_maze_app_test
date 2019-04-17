@@ -9,6 +9,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 @Entity(tableName = "show")
 public class Show implements Parcelable {
 
@@ -52,6 +54,7 @@ public class Show implements Parcelable {
         this.premiered = in.readString();
         this.image = in.readParcelable(Image.class.getClassLoader());
         this.summary = in.readString();
+        this.isFavorite = in.readByte() != 0;
     }
 
     public long getId() {
@@ -103,6 +106,7 @@ public class Show implements Parcelable {
         parcel.writeString(premiered);
         parcel.writeParcelable(image, flags);
         parcel.writeString(summary);
+        parcel.writeByte((byte) (isFavorite ? 1 : 0));
     }
 
     static Parcelable.Creator<Show> CREATOR = new Parcelable.Creator<Show>() {
@@ -116,5 +120,13 @@ public class Show implements Parcelable {
             return new Show[i];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Show show = (Show) o;
+        return id == show.id;
+    }
 
 }

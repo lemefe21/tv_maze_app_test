@@ -3,7 +3,6 @@ package com.leme.tvmazeapptest.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +23,7 @@ import butterknife.ButterKnife;
 
 public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowItemViewHolder> {
 
-    private List<UserResponse> mShowList;
-    private List<Show> mFavoritedShows;
+    private List<Show> mShowList;
     private final ShowItemAdapterOnClickHandle mClickHandle;
     private Context mContext;
 
@@ -47,16 +45,13 @@ public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowIt
 
     @Override
     public void onBindViewHolder(@NonNull ShowItemViewHolder showItemViewHolder, int position) {
-        Log.i("mFavoritedShowsList", String.valueOf(mFavoritedShows.size()));
-
-        Show show = mShowList.get(position).getShow();
+        Show show = mShowList.get(position);
         Image image = show.getImage();
 
         String imageUrl = "no_image";
         if(image != null) {
             imageUrl = image.getMedium();
         }
-
         Picasso.with(mContext)
                 .load(imageUrl)
                 .placeholder(R.drawable.vintage_tv_2)
@@ -64,7 +59,13 @@ public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowIt
                 .into(showItemViewHolder.mImageViewShowPoster);
 
         showItemViewHolder.mTextViewShowName.setText(show.getName());
-        showItemViewHolder.mTextViewShowGenres.setText(ShowUtils.AppendGenresString(show.getGenres()));
+        showItemViewHolder.mTextViewShowGenres.setText(ShowUtils.appendGenresString(show.getGenres()));
+
+        if(show.isFavorite()) {
+            showItemViewHolder.mImageViewFavoriteShowItem.setVisibility(View.VISIBLE);
+        } else {
+            showItemViewHolder.mImageViewFavoriteShowItem.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -74,8 +75,7 @@ public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowIt
     }
 
     public void setListData(List<UserResponse> response, List<Show> favoritedShows) {
-        mShowList = response;
-        mFavoritedShows = favoritedShows;
+        mShowList = ShowUtils.setFavoriteShowInListByResponseList(response, favoritedShows);
         notifyDataSetChanged();
     }
 
@@ -90,6 +90,9 @@ public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowIt
         @BindView(R.id.tv_main_show_genres)
         TextView mTextViewShowGenres;
 
+        @BindView(R.id.iv_main_favorite_show_item)
+        ImageView mImageViewFavoriteShowItem;
+
         public ShowItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -99,7 +102,7 @@ public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowIt
 
         @Override
         public void onClick(View view) {
-            Show showAtPosition = mShowList.get(getAdapterPosition()).getShow();
+            Show showAtPosition = mShowList.get(getAdapterPosition());
             mClickHandle.onClick(showAtPosition);
         }
 

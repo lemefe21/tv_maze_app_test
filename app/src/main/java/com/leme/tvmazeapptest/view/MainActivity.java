@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -175,4 +176,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         showTask.execute();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == mPresenter.getRequestCode() && resultCode == RESULT_OK) {
+            Show show = (Show) data.getExtras().get("passed_item");
+            mPresenter.updateShowList(show);
+        }
+    }
 }

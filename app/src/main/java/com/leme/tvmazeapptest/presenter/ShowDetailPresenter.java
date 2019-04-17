@@ -41,4 +41,8 @@ public class ShowDetailPresenter implements ShowDetailContract.Presenter {
         return show.isFavorite();
     }
 
+    public Show getShowUpdate() {
+        return show;
+    }
+
 }

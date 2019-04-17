@@ -10,7 +10,7 @@ public class ShowDetailService implements ShowDetailContract.Service {
     @Override
     public boolean deleteFavorite(Show show, ShowDetailActivity showDetailActivity) {
         long deleteId = DatabaseClient.getInstance(showDetailActivity).getAppDatabase().showDao().delete(show);
-        return !(deleteId > 1);
+        return !(deleteId >= 1);
 
     }
 

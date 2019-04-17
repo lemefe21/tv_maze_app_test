@@ -1,5 +1,6 @@
 package com.leme.tvmazeapptest.view;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import butterknife.ButterKnife;
 public class ShowDetailActivity extends AppCompatActivity implements ShowDetailContract.View {
 
     private ShowDetailPresenter mDetailPresenter;
+    private boolean mShowUpdatedStatus;
 
     @BindView(R.id.view_detail_background_favorite)
     View mViewFavorite;
@@ -80,6 +82,16 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
     }
 
     @Override
+    public void finish() {
+        if(mShowUpdatedStatus) {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("passed_item", mDetailPresenter.getShowUpdate());
+            setResult(RESULT_OK, returnIntent);
+        }
+        super.finish();
+    }
+
+    @Override
     public void setShowDetailData(Show show) {
         Image image = show.getImage();
         String imageUrl = "no_image";
@@ -100,7 +112,7 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
                 .into(mImageViewShowPoster);
 
         mTextViewShowName.setText(show.getName());
-        mTextViewShowGenres.setText(ShowUtils.AppendGenresString(show.getGenres()));
+        mTextViewShowGenres.setText(ShowUtils.appendGenresString(show.getGenres()));
         mTextViewShowSummary.setText(show.getSummary());
         mTextViewShowPremiered.setText(show.getPremiered());
 
@@ -143,7 +155,7 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
             protected void onPostExecute(Boolean favorited) {
                 super.onPostExecute(favorited);
                 setFavoritedIcon(favorited);
-                Toast.makeText(ShowDetailActivity.this, "onPostExecute", Toast.LENGTH_LONG).show();
+                mShowUpdatedStatus = true;
             }
         }
 
