@@ -1,11 +1,13 @@
 package com.leme.tvmazeapptest.view;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.leme.tvmazeapptest.R;
+
+import static com.leme.tvmazeapptest.utils.AppValues.DELAY_SPLASH_SCREEN;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -26,7 +28,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 goToMainActivity();
             }
-        }, 5000);
+        }, DELAY_SPLASH_SCREEN);
 
     }
 

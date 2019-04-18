@@ -2,23 +2,25 @@ package com.leme.tvmazeapptest.view;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.leme.tvmazeapptest.R;
 import com.leme.tvmazeapptest.contract.ShowDetailContract;
-import com.leme.tvmazeapptest.model.Image;
-import com.leme.tvmazeapptest.model.Show;
+import com.leme.tvmazeapptest.model.parcelable.ShowParcelable;
+import com.leme.tvmazeapptest.model.parcelable.ShowParcelable.Image;
 import com.leme.tvmazeapptest.presenter.ShowDetailPresenter;
 import com.leme.tvmazeapptest.utils.ShowUtils;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.leme.tvmazeapptest.utils.AppValues.EXTRA_RESULT_DETAIL_KEY;
+import static com.leme.tvmazeapptest.utils.AppValues.NO_IMAGE_URL;
 
 public class ShowDetailActivity extends AppCompatActivity implements ShowDetailContract.View {
 
@@ -85,16 +87,16 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
     public void finish() {
         if(mShowUpdatedStatus) {
             Intent returnIntent = new Intent();
-            returnIntent.putExtra("passed_item", mDetailPresenter.getShowUpdate());
+            returnIntent.putExtra(EXTRA_RESULT_DETAIL_KEY, mDetailPresenter.getShowUpdate());
             setResult(RESULT_OK, returnIntent);
         }
         super.finish();
     }
 
     @Override
-    public void setShowDetailData(Show show) {
+    public void setShowDetailData(ShowParcelable show) {
         Image image = show.getImage();
-        String imageUrl = "no_image";
+        String imageUrl = NO_IMAGE_URL;
         if(image != null) {
             imageUrl = image.getMedium();
         }
@@ -116,10 +118,10 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
         mTextViewShowSummary.setText(show.getSummary());
         mTextViewShowPremiered.setText(show.getPremiered());
 
-        setFavoritedIcon(show.isFavorite());
+        setFavoriteIcon(show.isFavorite());
     }
 
-    private void setFavoritedIcon(boolean isFavorite) {
+    private void setFavoriteIcon(boolean isFavorite) {
         if(isFavorite) {
             favoriteShowIcon();
         } else {
@@ -152,9 +154,9 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
             }
 
             @Override
-            protected void onPostExecute(Boolean favorited) {
-                super.onPostExecute(favorited);
-                setFavoritedIcon(favorited);
+            protected void onPostExecute(Boolean favorite) {
+                super.onPostExecute(favorite);
+                setFavoriteIcon(favorite);
                 mShowUpdatedStatus = true;
             }
         }
