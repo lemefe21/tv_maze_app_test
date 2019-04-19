@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -115,7 +117,7 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
 
         mTextViewShowName.setText(show.getName());
         mTextViewShowGenres.setText(ShowUtils.appendGenresString(show.getGenres()));
-        mTextViewShowSummary.setText(show.getSummary());
+        mTextViewShowSummary.setText(Html.fromHtml(show.getSummary()));
         mTextViewShowPremiered.setText(show.getPremiered());
 
         setFavoriteIcon(show.isFavorite());

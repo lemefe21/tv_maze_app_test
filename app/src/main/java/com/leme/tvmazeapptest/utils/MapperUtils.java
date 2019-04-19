@@ -8,6 +8,9 @@ import com.leme.tvmazeapptest.model.response.ApiResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leme.tvmazeapptest.utils.AppValues.NO_IMAGE_URL;
+import static com.leme.tvmazeapptest.utils.ShowUtils.parsePremieredDate;
+
 public class MapperUtils {
 
     private MapperUtils() throws IllegalAccessException {
@@ -25,17 +28,18 @@ public class MapperUtils {
             parcelable.setId(show.getId());
             parcelable.setName(show.getName());
             parcelable.setGenres(show.getGenres());
-            parcelable.setPremiered(show.getPremiered());
+            parcelable.setPremiered(parsePremieredDate(show.getPremiered()));
             parcelable.setSummary(show.getSummary());
 
+            ImageParcelable parcelableImage = new ImageParcelable();
             if(image == null) {
-                parcelable.setImage(null);
+                parcelableImage.setMedium(NO_IMAGE_URL);
+                parcelableImage.setOriginal(NO_IMAGE_URL);
             } else {
-                ImageParcelable parcelableImage = new ImageParcelable();
                 parcelableImage.setMedium(image.getMedium());
                 parcelableImage.setOriginal(image.getOriginal());
-                parcelable.setImage(parcelableImage);
             }
+            parcelable.setImage(parcelableImage);
 
             parcelableList.add(parcelable);
         }

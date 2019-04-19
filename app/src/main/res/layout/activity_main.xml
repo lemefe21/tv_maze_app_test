@@ -34,5 +34,4 @@
             tools:listitem="@layout/show_list_item"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
-
 </android.support.constraint.ConstraintLayout>

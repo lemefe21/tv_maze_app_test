@@ -53,12 +53,11 @@ public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowIt
     public void onBindViewHolder(@NonNull ShowItemViewHolder showItemViewHolder, int position) {
         ShowParcelable show = mShowList.get(position);
         ImageParcelable image = show.getImage();
-        String imageUrl = (image == null) ? NO_IMAGE_URL : image.getMedium();
 
         Picasso.with(mContext)
-                .load(imageUrl)
-                .placeholder(R.drawable.vintage_tv_2)
-                .error(R.drawable.vintage_tv_2)
+                .load(image.getMedium())
+                .placeholder(R.drawable.default_poster)
+                .error(R.drawable.default_poster)
                 .into(showItemViewHolder.mImageViewShowPoster);
 
         showItemViewHolder.mTextViewShowName.setText(show.getName());
