@@ -19,4 +19,21 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="CardItem">
+        <item name="android:layout_width">@dimen/default_match_constraint</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="CardItemShowName" parent="CardItem">
+        <item name="android:textSize">@dimen/default_card_title_font</item>
+    </style>
+
+    <style name="CardItemShowGenres" parent="CardItem">
+        <item name="android:textSize">@dimen/default_card_genres_font</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.leme.tvmazeapptest.utils.AppValues.UTIL_CLASS;
-import static com.leme.tvmazeapptest.utils.MapperUtils.showParcelableToEntity;
 import static java.lang.Math.round;
 
 public class ShowUtils {

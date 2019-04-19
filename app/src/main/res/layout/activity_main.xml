@@ -8,11 +8,11 @@
 
     <ImageView
         android:id="@+id/iv_main_image_no_internet"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/default_match_constraint"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:src="@drawable/illustrations_no_internet"
+        android:layout_margin="@dimen/default_margin"
         android:visibility="invisible"
+        android:src="@drawable/illustrations_no_internet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,12 +25,13 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_main_shows"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/default_match_constraint"
+            android:layout_height="@dimen/default_match_constraint"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/show_list_item"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
