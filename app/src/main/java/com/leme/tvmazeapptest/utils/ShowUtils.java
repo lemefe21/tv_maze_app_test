@@ -13,18 +13,17 @@ public class ShowUtils {
         return Math.round(screenWidth / posterWidth);
     }
 
-    public static String AppendGenresString(String[] genres) {
-
+    public static String appendGenresString(String[] genres) {
         String genresToView = "";
-        StringBuilder builder = new StringBuilder();
 
-        for (String string : genres) {
-            builder.append(string + " - ");
-        }
-        if(genres.length >= 1) {
+        if(genres.length > 0) {
+            StringBuilder builder = new StringBuilder();
+            for (String string : genres) {
+                builder.append(string + " - ");
+            }
             genresToView = builder.substring(0, builder.length()-3);
         }
-        return genresToView;
 
+        return genresToView;
     }
 }

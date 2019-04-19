@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Tv Maze App</string>
     <string name="show_name">Show name</string>
-    <string name="show_genres">Show genres</string>
+    <string name="default_show_genres">Comedy</string>
     <string name="error_server">Unfortunately the search has problems.</string>
     <string name="error_network">Problem in connecting to the data network.</string>
     <string name="error_unknown">Unfortunately the search has unknown issues.</string>
@@ -10,4 +10,5 @@
     <string name="genres_label">Genres</string>
     <string name="summary_label">Summary</string>
     <string name="premiered_label">Premiered</string>
+    <string name="default_show_name">Seth MacFarlane\'s Cavalcade of Cartoon Comedy</string>
 </resources>

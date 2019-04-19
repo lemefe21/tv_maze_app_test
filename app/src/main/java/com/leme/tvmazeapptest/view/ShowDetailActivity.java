@@ -109,7 +109,7 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
                 .into(mImageViewShowPoster);
 
         mTextViewShowName.setText(show.getName());
-        mTextViewShowGenres.setText(ShowUtils.AppendGenresString(show.getGenres()));
+        mTextViewShowGenres.setText(ShowUtils.appendGenresString(show.getGenres()));
         mTextViewShowSummary.setText(show.getSummary());
         mTextViewShowPremiered.setText(show.getPremiered());
 

@@ -3,7 +3,6 @@ package com.leme.tvmazeapptest.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +63,7 @@ public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowIt
                 .into(showItemViewHolder.mImageViewShowPoster);
 
         showItemViewHolder.mTextViewShowName.setText(show.getName());
-        showItemViewHolder.mTextViewShowGenres.setText(ShowUtils.AppendGenresString(show.getGenres()));
+        showItemViewHolder.mTextViewShowGenres.setText(ShowUtils.appendGenresString(show.getGenres()));
 
     }
 

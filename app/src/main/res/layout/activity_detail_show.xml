@@ -10,12 +10,12 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="36dp">
+        android:paddingBottom="@dimen/detail_layout_padding_bottom">
 
         <View
             android:id="@+id/view_detail_background_poster"
-            android:layout_width="0dp"
-            android:layout_height="250dp"
+            android:layout_width="@dimen/default_match_constraint"
+            android:layout_height="@dimen/detail_show_poster_background_height"
             android:background="@color/colorPrimaryDark"
             app:layout_constraintBottom_toTopOf="@+id/view_detail_poster_divider"
             app:layout_constraintEnd_toEndOf="parent"
@@ -24,8 +24,8 @@
 
         <ImageView
             android:id="@+id/iv_detail_show_background_poster"
-            android:layout_width="0dp"
-            android:layout_height="250dp"
+            android:layout_width="@dimen/default_match_constraint"
+            android:layout_height="@dimen/detail_show_poster_background_height"
             android:scaleType="centerCrop"
             android:scrollY="-150dp"
             android:alpha=".30"
