@@ -3,18 +3,21 @@ package com.leme.tvmazeapptest.api;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiClient {
+import static com.leme.tvmazeapptest.utils.AppValues.BASE_URL;
 
-    public static final String BASE_URL = "http://api.tvmaze.com/";
-    private static Retrofit retrofit = null;
+public enum ApiClientSingleton {
+    API_CLIENT_INSTANCE;
 
-    public static Retrofit getClient() {
-        if(retrofit == null) {
+    private Retrofit retrofit;
+
+    public Retrofit getClient() {
+        if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
+
         return retrofit;
     }
 

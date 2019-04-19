@@ -16,7 +16,5 @@ public class ExceptionHandler {
         } else {
             return R.string.error_unknown;
         }
-
     }
-
 }

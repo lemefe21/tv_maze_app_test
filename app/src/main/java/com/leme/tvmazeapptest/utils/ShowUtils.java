@@ -3,13 +3,21 @@ package com.leme.tvmazeapptest.utils;
 import android.util.DisplayMetrics;
 import android.view.Display;
 
-import com.leme.tvmazeapptest.model.Show;
-import com.leme.tvmazeapptest.model.UserResponse;
+import com.leme.tvmazeapptest.model.entity.Show;
+import com.leme.tvmazeapptest.model.parcelable.ShowParcelable;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leme.tvmazeapptest.utils.AppValues.UTIL_CLASS;
+import static com.leme.tvmazeapptest.utils.MapperUtils.showParcelableToEntity;
+import static java.lang.Math.round;
+
 public class ShowUtils {
+
+    private ShowUtils() throws IllegalAccessException {
+        throw new IllegalAccessException(UTIL_CLASS);
+    }
 
     public static int calculateBestSpanCount(Display display) {
         int posterWidth = 500;
@@ -18,50 +26,48 @@ public class ShowUtils {
         display.getMetrics(outMetrics);
 
         float screenWidth = outMetrics.widthPixels;
-        return Math.round(screenWidth / posterWidth);
+        return round(screenWidth / posterWidth);
     }
 
     public static String appendGenresString(String[] genres) {
-        String genresToView = "";
         StringBuilder builder = new StringBuilder();
 
         for (String string : genres) {
-            builder.append(string + " - ");
-        }
-        if(genres.length >= 1) {
-            genresToView = builder.substring(0, builder.length()-3);
+            builder.append(string)
+                    .append(" - ");
         }
 
-        return genresToView;
+        return genres.length >= 1 ? builder.substring(0, builder.length() - 3) : "";
     }
 
-    public static List<Show> setFavoriteShowInListByResponseList(List<UserResponse> responseList, List<Show> favoritedShows) {
-        List<Show> listShowWithFavotire = new ArrayList<Show>();
+    public static List<ShowParcelable> setFavoritesInShowParcelableList(List<ShowParcelable> showParcelableList,
+                                                                 List<Show> favoriteShows) {
+        List<ShowParcelable> listShowWithFavorites = new ArrayList<>();
 
-        for (UserResponse response : responseList) {
-            if(favoritedShows.size() == 0) {
-                response.getShow().setFavorite(false);
-            } else {
-                for (Show show : favoritedShows) {
-                    if(response.getShow().getId() == show.getId()) {
-                        response.getShow().setFavorite(true);
+        for (ShowParcelable show : showParcelableList) {
+            if(!favoriteShows.isEmpty()) {
+                for (Show favoriteShow : favoriteShows) {
+                    if(show.getId() == favoriteShow.getId()) {
+                        show.setFavorite(true);
                     }
                 }
+            } else {
+                show.setFavorite(false);
             }
-            listShowWithFavotire.add(response.getShow());
+
+            listShowWithFavorites.add(show);
         }
 
-        return listShowWithFavotire;
+        return showParcelableList;
     }
 
-    public static List<Show> addShowInFavoritedList(Show showUpdate, List<Show> favoritedShows) {
-        if(favoritedShows.contains(showUpdate)) {
-            favoritedShows.remove(showUpdate);
-        } else {
-            favoritedShows.add(showUpdate);
+    public static List<ShowParcelable> updateListWithFavoriteShow(ShowParcelable show, List<ShowParcelable> favoriteListShows) {
+
+        if(favoriteListShows.contains(show)) {
+            favoriteListShows.set(favoriteListShows.indexOf(show), show);
         }
 
-        return favoritedShows;
+        return favoriteListShows;
     }
 
 }
