@@ -3,43 +3,43 @@ package com.leme.tvmazeapptest.presenter;
 import android.content.Intent;
 
 import com.leme.tvmazeapptest.contract.MainContract;
-import com.leme.tvmazeapptest.handler.ExceptionHandler;
-import com.leme.tvmazeapptest.model.Show;
-import com.leme.tvmazeapptest.model.UserResponse;
-import com.leme.tvmazeapptest.service.MainService;
+import com.leme.tvmazeapptest.contract.ShowServiceContract;
+import com.leme.tvmazeapptest.model.entity.Show;
+import com.leme.tvmazeapptest.model.parcelable.ShowParcelable;
+import com.leme.tvmazeapptest.service.ShowService;
+import com.leme.tvmazeapptest.utils.ShowUtils;
 import com.leme.tvmazeapptest.view.MainActivity;
 import com.leme.tvmazeapptest.view.ShowDetailActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainPresenter implements MainContract.Presenter, MainContract.Service.RequestListener {
+import static com.leme.tvmazeapptest.handler.ExceptionHandler.FormatErrorUi;
+import static com.leme.tvmazeapptest.utils.AppValues.EXTRA_SHOW_KEY;
+import static com.leme.tvmazeapptest.utils.AppValues.REQUEST_CODE;
+import static com.leme.tvmazeapptest.utils.ShowUtils.updateListWithFavoriteShow;
 
-    public static final String EXTRA_SHOW_KEY = "extra_show_key";
+public class MainPresenter implements MainContract.Presenter, ShowServiceContract.RequestListener {
+
     private MainContract.View view;
-    private MainContract.Service service;
+    private ShowServiceContract service;
+    private List<Show> favoriteListShows;
+    private List<ShowParcelable> showParcelables;
 
     public MainPresenter(MainContract.View view) {
-
         this.view = view;
-        service = new MainService();
-
+        service = new ShowService();
     }
 
     @Override
-    public void success(List<UserResponse> response) {
-
-        view.setDataToRecyclerView(response);
-        view.hideProgress();
-
+    public void success(List<ShowParcelable> showList) {
+        showParcelables = showList;
+        view.setDataToRecyclerView(showParcelables, favoriteListShows);
     }
 
     @Override
     public void error(Throwable throwable) {
-
-        view.showError(ExceptionHandler.FormatErrorUi(throwable));
-        view.hideProgress();
-        view.hideProgress();
-
+        view.showError(FormatErrorUi(throwable));
     }
 
     @Override
@@ -49,22 +49,32 @@ public class MainPresenter implements MainContract.Presenter, MainContract.Servi
 
     @Override
     public void requestDataFromServer(String query) {
-
-        view.showProgress();
         try {
-            service.getShowsByQuery(this, query);
+            service.loadShowsByQuery(this, query);
         } catch (Exception e) {
-            this.view.showError(ExceptionHandler.FormatErrorUi(e));
+            this.view.showError(FormatErrorUi(e));
         }
-
     }
 
     @Override
-    public void goToDetailsActivity(MainActivity mainActivity, Show show) {
-
+    public void goToDetailsActivity(MainActivity mainActivity, ShowParcelable show) {
         Intent intent = new Intent(mainActivity, ShowDetailActivity.class);
         intent.putExtra(EXTRA_SHOW_KEY, show);
-        mainActivity.startActivity(intent);
-
+        mainActivity.startActivityForResult(intent, REQUEST_CODE);
     }
+
+    @Override
+    public void loadFavoriteShows(MainActivity mainActivity) {
+        favoriteListShows = service.getFavoriteListShowsDb(mainActivity);
+    }
+
+    public void updateShowList(ShowParcelable showParcelable) {
+        showParcelables = updateListWithFavoriteShow(showParcelable, new ArrayList<>(showParcelables));
+        view.setUpdateDataToRecyclerView(showParcelables);
+    }
+
+    public int getRequestCode() {
+        return REQUEST_CODE;
+    }
+
 }
