@@ -2,6 +2,7 @@ package com.leme.tvmazeapptest.utils;
 
 import com.leme.tvmazeapptest.model.entity.Show;
 import com.leme.tvmazeapptest.model.parcelable.ShowParcelable;
+import com.leme.tvmazeapptest.model.parcelable.ShowParcelable.ImageParcelable;
 import com.leme.tvmazeapptest.model.response.ApiResponse;
 
 import java.util.ArrayList;
@@ -27,11 +28,14 @@ public class MapperUtils {
             parcelable.setPremiered(show.getPremiered());
             parcelable.setSummary(show.getSummary());
 
-            ShowParcelable.Image parcelableImage = new ShowParcelable.Image();
-            parcelableImage.setMedium(image.getMedium());
-            parcelableImage.setOriginal(image.getOriginal());
-
-            parcelable.setImage(parcelableImage);
+            if(image == null) {
+                parcelable.setImage(null);
+            } else {
+                ImageParcelable parcelableImage = new ImageParcelable();
+                parcelableImage.setMedium(image.getMedium());
+                parcelableImage.setOriginal(image.getOriginal());
+                parcelable.setImage(parcelableImage);
+            }
 
             parcelableList.add(parcelable);
         }

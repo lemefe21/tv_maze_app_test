@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.leme.tvmazeapptest.R;
 import com.leme.tvmazeapptest.model.entity.Show;
 import com.leme.tvmazeapptest.model.parcelable.ShowParcelable;
+import com.leme.tvmazeapptest.model.parcelable.ShowParcelable.ImageParcelable;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -23,6 +24,7 @@ import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static com.leme.tvmazeapptest.utils.AppValues.NO_IMAGE_URL;
 import static com.leme.tvmazeapptest.utils.ShowUtils.appendGenresString;
+import static com.leme.tvmazeapptest.utils.ShowUtils.setFavoritesInShowParcelableList;
 
 public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowItemViewHolder> {
 
@@ -50,7 +52,7 @@ public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowIt
     @Override
     public void onBindViewHolder(@NonNull ShowItemViewHolder showItemViewHolder, int position) {
         ShowParcelable show = mShowList.get(position);
-        ShowParcelable.Image image = show.getImage();
+        ImageParcelable image = show.getImage();
         String imageUrl = (image == null) ? NO_IMAGE_URL : image.getMedium();
 
         Picasso.with(mContext)
@@ -75,9 +77,12 @@ public class ShowItemAdapter extends RecyclerView.Adapter<ShowItemAdapter.ShowIt
     }
 
     public void setListData(List<ShowParcelable> showParcelables, List<Show> favoriteShows) {
-        //mShowList = setFavoriteShowInListByResponseList(showParcelables, favoriteShows);
-        mShowList = showParcelables;
+        mShowList = setFavoritesInShowParcelableList(showParcelables, favoriteShows);
         notifyDataSetChanged();
+    }
+
+    public void setUpdateListData(List<ShowParcelable> showParcelables) {
+        mShowList = showParcelables;
     }
 
     public class ShowItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

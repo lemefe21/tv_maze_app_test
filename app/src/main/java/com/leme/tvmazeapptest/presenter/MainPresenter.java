@@ -7,14 +7,17 @@ import com.leme.tvmazeapptest.contract.ShowServiceContract;
 import com.leme.tvmazeapptest.model.entity.Show;
 import com.leme.tvmazeapptest.model.parcelable.ShowParcelable;
 import com.leme.tvmazeapptest.service.ShowService;
+import com.leme.tvmazeapptest.utils.ShowUtils;
 import com.leme.tvmazeapptest.view.MainActivity;
 import com.leme.tvmazeapptest.view.ShowDetailActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.leme.tvmazeapptest.handler.ExceptionHandler.FormatErrorUi;
 import static com.leme.tvmazeapptest.utils.AppValues.EXTRA_SHOW_KEY;
 import static com.leme.tvmazeapptest.utils.AppValues.REQUEST_CODE;
+import static com.leme.tvmazeapptest.utils.ShowUtils.updateListWithFavoriteShow;
 
 public class MainPresenter implements MainContract.Presenter, ShowServiceContract.RequestListener {
 
@@ -62,12 +65,12 @@ public class MainPresenter implements MainContract.Presenter, ShowServiceContrac
 
     @Override
     public void loadFavoriteShows(MainActivity mainActivity) {
-        favoriteListShows = service.getFavoriteListShowsDb(mainActivity, showParcelables);
+        favoriteListShows = service.getFavoriteListShowsDb(mainActivity);
     }
 
     public void updateShowList(ShowParcelable showParcelable) {
-        /*showParcelables = ShowUtils.addShowInFavoritedList(showParcelable, new ArrayList<>(favoriteListShows));
-        view.setDataToRecyclerView(showParcelables, favoriteListShows);*/
+        showParcelables = updateListWithFavoriteShow(showParcelable, new ArrayList<>(showParcelables));
+        view.setUpdateDataToRecyclerView(showParcelables);
     }
 
     public int getRequestCode() {

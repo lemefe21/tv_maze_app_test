@@ -15,7 +15,7 @@ public interface ShowServiceContract {
 
     void loadShowsByQuery(ShowServiceContract.RequestListener request, String newQuery);
 
-    List<Show> getFavoriteListShowsDb(MainActivity mainActivity, List<ShowParcelable> showList);
+    List<Show> getFavoriteListShowsDb(MainActivity mainActivity);
 
     boolean deleteFavorite(ShowParcelable show, ShowDetailActivity showDetailActivity);
     boolean addFavorite(ShowParcelable show, ShowDetailActivity showDetailActivity);

@@ -42,16 +42,11 @@ public class ShowService implements ShowServiceContract {
     }
 
     @Override
-    public List<Show> getFavoriteListShowsDb(MainActivity mainActivity, List<ShowParcelable> showList) {
-        /*List<Long> ids = new ArrayList<>();
-        for (ShowParcelable showParcelable : showList) {
-            ids.add(showParcelable.getId());
-        }
-
+    public List<Show> getFavoriteListShowsDb(MainActivity mainActivity) {
         return DATABASE_INSTANCE.getInstance(mainActivity)
                 .getAppDatabase()
                 .showDao()
-                .getFavoriteShows(ids);*/
+                .getFavoriteShows();
     }
 
     @Override

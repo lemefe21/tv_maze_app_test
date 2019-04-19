@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.leme.tvmazeapptest.R;
 import com.leme.tvmazeapptest.contract.ShowDetailContract;
 import com.leme.tvmazeapptest.model.parcelable.ShowParcelable;
-import com.leme.tvmazeapptest.model.parcelable.ShowParcelable.Image;
+import com.leme.tvmazeapptest.model.parcelable.ShowParcelable.ImageParcelable;
 import com.leme.tvmazeapptest.presenter.ShowDetailPresenter;
 import com.leme.tvmazeapptest.utils.ShowUtils;
 import com.squareup.picasso.Picasso;
@@ -95,7 +95,7 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
 
     @Override
     public void setShowDetailData(ShowParcelable show) {
-        Image image = show.getImage();
+        ImageParcelable image = show.getImage();
         String imageUrl = NO_IMAGE_URL;
         if(image != null) {
             imageUrl = image.getMedium();

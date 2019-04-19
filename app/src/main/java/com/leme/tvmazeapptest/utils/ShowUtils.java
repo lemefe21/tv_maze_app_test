@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.leme.tvmazeapptest.utils.AppValues.UTIL_CLASS;
+import static com.leme.tvmazeapptest.utils.MapperUtils.showParcelableToEntity;
 import static java.lang.Math.round;
 
 public class ShowUtils {
@@ -28,7 +29,7 @@ public class ShowUtils {
         return round(screenWidth / posterWidth);
     }
 
-    public static String appendGenresString(List<String> genres) {
+    public static String appendGenresString(String[] genres) {
         StringBuilder builder = new StringBuilder();
 
         for (String string : genres) {
@@ -36,38 +37,37 @@ public class ShowUtils {
                     .append(" - ");
         }
 
-        return genres.size() >= 1 ? builder.substring(0, builder.length() - 3) : "";
+        return genres.length >= 1 ? builder.substring(0, builder.length() - 3) : "";
     }
 
-    /*public static List<Show> setFavoriteShowInListByResponseList(List<ShowParcelable> showList,
-                                                                 List<Show> favoritedShows) {
-        List<Show> listShowWithFavotire = new ArrayList<>();
+    public static List<ShowParcelable> setFavoritesInShowParcelableList(List<ShowParcelable> showParcelableList,
+                                                                 List<Show> favoriteShows) {
+        List<ShowParcelable> listShowWithFavorites = new ArrayList<>();
 
-        for (UserResponse response : responseList) {
-            if(!favoritedShows.isEmpty()) {
-                for (Show show : favoritedShows) {
-                    if(response.getShow().equals(show)) {
-                        response.getShow().setFavorite(true);
+        for (ShowParcelable show : showParcelableList) {
+            if(!favoriteShows.isEmpty()) {
+                for (Show favoriteShow : favoriteShows) {
+                    if(show.getId() == favoriteShow.getId()) {
+                        show.setFavorite(true);
                     }
                 }
             } else {
-                response.getShow().setFavorite(false);
+                show.setFavorite(false);
             }
 
-            listShowWithFavotire.add(response.getShow());
+            listShowWithFavorites.add(show);
         }
 
-        return listShowWithFavotire;
-    }*/
+        return showParcelableList;
+    }
 
-    /*public static List<ShowParcelable> addShowInFavoritedList(ShowParcelable showUpdate, List<Show> favoritedShows) {
-        if(favoritedShows.contains(showUpdate)) {
-            favoritedShows.remove(showUpdate);
-        } else {
-            favoritedShows.add(showUpdate);
+    public static List<ShowParcelable> updateListWithFavoriteShow(ShowParcelable show, List<ShowParcelable> favoriteListShows) {
+
+        if(favoriteListShows.contains(show)) {
+            favoriteListShows.set(favoriteListShows.indexOf(show), show);
         }
 
-        return showUpdate;
-    }*/
+        return favoriteListShows;
+    }
 
 }

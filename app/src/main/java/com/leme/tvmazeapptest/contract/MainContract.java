@@ -11,7 +11,8 @@ public interface MainContract {
     interface View {
         void showProgress();
         void hideProgress();
-        void setDataToRecyclerView(List<ShowParcelable> response, List<Show> favoritedShows);
+        void setDataToRecyclerView(List<ShowParcelable> shows, List<Show> favoriteShows);
+        void setUpdateDataToRecyclerView(List<ShowParcelable> shows);
         void showError(int error);
     }
 

@@ -3,8 +3,6 @@ package com.leme.tvmazeapptest.model.parcelable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,9 +12,9 @@ public class ShowParcelable implements Parcelable {
 
     private long id;
     private String name;
-    private List<String> genres = null;
+    private String[] genres;
     private String premiered;
-    private Image image;
+    private ImageParcelable image;
     private String summary;
     private boolean isFavorite;
 
@@ -26,10 +24,11 @@ public class ShowParcelable implements Parcelable {
     public ShowParcelable(Parcel in) {
         this.id = in.readLong();
         this.name = in.readString();
-        this.genres = in.createStringArrayList();
+        this.genres = in.createStringArray();
         this.premiered = in.readString();
-        this.image = in.readParcelable(Image.class.getClassLoader());
+        this.image = in.readParcelable(ImageParcelable.class.getClassLoader());
         this.summary = in.readString();
+        this.isFavorite = in.readByte() != 0;
     }
 
     @Override
@@ -41,10 +40,11 @@ public class ShowParcelable implements Parcelable {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeLong(id);
         parcel.writeString(name);
-        parcel.writeList(genres);
+        parcel.writeStringArray(genres);
         parcel.writeString(premiered);
         parcel.writeParcelable(image, flags);
         parcel.writeString(summary);
+        parcel.writeByte((byte) (isFavorite ? 1 : 0));
     }
 
     static Parcelable.Creator<ShowParcelable> CREATOR = new Parcelable.Creator<ShowParcelable>() {
@@ -59,17 +59,32 @@ public class ShowParcelable implements Parcelable {
         }
     };
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ShowParcelable that = (ShowParcelable) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
+    }
+
     @Getter
     @Setter
-    public static class Image implements Parcelable {
+    public static class ImageParcelable implements Parcelable {
 
         private String medium;
         private String original;
 
-        public Image() {
+        public ImageParcelable() {
         }
 
-        public Image(Parcel in) {
+        public ImageParcelable(Parcel in) {
             this.medium = in.readString();
             this.original = in.readString();
         }
@@ -85,15 +100,15 @@ public class ShowParcelable implements Parcelable {
             parcel.writeString(original);
         }
 
-        static Parcelable.Creator<Image> CREATOR = new Parcelable.Creator<Image>() {
+        static Parcelable.Creator<ImageParcelable> CREATOR = new Parcelable.Creator<ImageParcelable>() {
             @Override
-            public Image createFromParcel(Parcel parcel) {
-                return new Image(parcel);
+            public ImageParcelable createFromParcel(Parcel parcel) {
+                return new ImageParcelable(parcel);
             }
 
             @Override
-            public Image[] newArray(int i) {
-                return new Image[i];
+            public ImageParcelable[] newArray(int i) {
+                return new ImageParcelable[i];
             }
         };
     }

@@ -100,8 +100,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void setDataToRecyclerView(List<ShowParcelable> showList, List<Show> favoritedShows) {
-        mAdapter.setListData(showList, favoritedShows);
+    public void setDataToRecyclerView(List<ShowParcelable> showList, List<Show> favoriteShows) {
+        mAdapter.setListData(showList, favoriteShows);
+    }
+
+    @Override
+    public void setUpdateDataToRecyclerView(List<ShowParcelable> shows) {
+        mAdapter.setUpdateListData(shows);
     }
 
     @Override
@@ -163,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             protected void onPreExecute() {
                 super.onPreExecute();
                 showProgress();
-                mPresenter.requestDataFromServer(queryShowTvCategory);
             }
 
             @Override
@@ -175,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
+                mPresenter.requestDataFromServer(queryShowTvCategory);
                 hideProgress();
             }
         }

@@ -29,7 +29,7 @@ public class ApiResponse {
         private String name;
 
         @SerializedName("genres")
-        private List<String> genres = null;
+        private String[] genres;
 
         @SerializedName("premiered")
         private String premiered;
