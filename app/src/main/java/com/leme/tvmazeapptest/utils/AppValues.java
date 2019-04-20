@@ -11,6 +11,7 @@ public final class AppValues {
     public static final String BASE_URL = "http://api.tvmaze.com/";
     public static final String DATABASE_NAME = "show";
     public static final String EXTRA_SHOW_KEY = "extra_show_key";
+    public static final String PARAMS_TO_FRAGMENT = "show_detail_fragment";
     public static final String EXTRA_RESULT_DETAIL_KEY = "passed_item";
     public static final String UTIL_CLASS = "Util class";
     public static final String VALUE_CLASS = "Value class";

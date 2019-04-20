@@ -7,6 +7,7 @@ import com.leme.tvmazeapptest.contract.ShowServiceContract;
 import com.leme.tvmazeapptest.model.parcelable.ShowParcelable;
 import com.leme.tvmazeapptest.service.ShowService;
 import com.leme.tvmazeapptest.view.ShowDetailActivity;
+import com.leme.tvmazeapptest.view.fragment.ShowDetailFragment;
 
 import static com.leme.tvmazeapptest.utils.AppValues.EXTRA_SHOW_KEY;
 
@@ -42,6 +43,21 @@ public class ShowDetailPresenter implements ShowDetailContract.Presenter {
 
         show.setFavorite(favorite);
         return favorite;
+    }
+
+    @Override
+    public boolean favoriteShowFragment(ShowDetailFragment showDetail) {
+        boolean favorite = show.isFavorite() ?
+                service.deleteFavorite(show, showDetail) :
+                service.addFavorite(show, showDetail);
+
+        show.setFavorite(favorite);
+        return favorite;
+    }
+
+    @Override
+    public void getFragmentBundle(ShowParcelable showParcelable) {
+        show = showParcelable;
     }
 
     public ShowParcelable getShowUpdate() {

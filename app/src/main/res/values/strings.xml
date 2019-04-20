@@ -13,4 +13,7 @@
     <string name="default_show_name">Seth MacFarlane\'s Cavalcade of Cartoon Comedy</string>
     <string name="mark_as_favorite">Mark as favorite</string>
     <string name="tv_show_name">Tv show name</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

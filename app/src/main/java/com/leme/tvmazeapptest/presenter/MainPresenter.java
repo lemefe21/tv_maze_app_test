@@ -10,6 +10,7 @@ import com.leme.tvmazeapptest.service.ShowService;
 import com.leme.tvmazeapptest.utils.ShowUtils;
 import com.leme.tvmazeapptest.view.MainActivity;
 import com.leme.tvmazeapptest.view.ShowDetailActivity;
+import com.leme.tvmazeapptest.view.fragment.ListShowFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,11 @@ public class MainPresenter implements MainContract.Presenter, ShowServiceContrac
 
     @Override
     public void loadFavoriteShows(MainActivity mainActivity) {
+        //favoriteListShows = service.getFavoriteListShowsDb(mainActivity);
+    }
+
+    @Override
+    public void loadFavoriteShows(ListShowFragment mainActivity) {
         favoriteListShows = service.getFavoriteListShowsDb(mainActivity);
     }
 
