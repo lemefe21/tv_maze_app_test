@@ -180,7 +180,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
                 mPresenter.requestDataFromServer(queryShowTvCategory);
-                hideProgress();
             }
         }
 
