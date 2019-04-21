@@ -23,7 +23,7 @@ Esse projeto utiliza o conceito MVP (Model View Presenter), temos a camada da **
 
 # APP
 
-* Telas - **View** responsável por mostrar informações ao usuário como **Activity**.
+* Telas - **View** responsável pela interação da UI com o usuário através das **Activity**.
 
 ![Scheme](images/view.png)
 
@@ -35,26 +35,61 @@ Esse projeto utiliza o conceito MVP (Model View Presenter), temos a camada da **
 
 ![Scheme](images/presenter.png)
 
-* Model - responsável por representar os dados de um Objeto para as **View**.
+* Model - responsável por representar os dados de um objeto, carregados do service para as **View**, response/ApiResponse representa a classe desserializada a partir do json response da API, entity/Show representa a entidade utilizada para salvar os dados no banco e parcelable/ShowParcelable é a nossa classe DTO para transitar entre as activitys e fragments.
 
 ![Scheme](images/model.png)
 
-* API e Service - responsáveis garantir o contrato da API consultada e obter os dados para o **Presenter**.
+* API e Service - responsáveis garantir o contrato da API utilizada e obter os dados para o **Presenter**.
 
 ![Scheme](images/api_service.png)
 
-* Testes unitários - responsáveis testar os métodos da **View** chamados pelo **Presenter**.
+* Database - responsáveis por garantir a estrutura da tabela, controlar a instância utilizada do banco pelo app e contrato para definir os métodos que definem as querys necessarias.
+
+![Scheme](images/database.png)
+
+* Testes unitários - responsáveis por testar os métodos de desserialização, mapeamento de objetos e utilitários em geral.
 
 ![Scheme](images/test.png)
 
 # RES
 
-* Dimens e Styles - xmls criados pensando em reusabilidade para criação de layout para diferentes tamanhos de telas e orientações.
+* Layouts, Dimens e Styles - xmls criados pensando em reusabilidade na criação dos layout para diferentes tamanhos de telas e orientações.
 
-![Scheme](images/values.png)
+![Scheme](images/values_layouts.png)
 
-# Telas de detalhe
+# Screens
 
-* A tela de detalhe muda de acordo com o estado do problema registrado por usuário do Github (teste realizado trocando o estado, "open", "closed" e "all"). 
+* Prints das telas presentes no app em diferentes orientações.
 
-![Scheme](images/detail_screen.png)
+
+### Portrait screenshots
+
+![Scheme](images/screens_001.png)
+
+![Scheme](images/screens_002.png)
+
+### Landscape screenshots
+
+![Scheme](images/screens_003.png)
+
+## Instalação do plugin do Projeto Lombok na IDE
+
+No desenvolvimento do app foi utilizado o Projeto Lombok https://projectlombok.org/ para diminuir a verbosidade do código Java nas classes model. Para utilização no Android Studio é necessario a instalação de um plugin na IDE.
+
+* File >> Settings
+
+![Scheme](images/lombok_plugin_install_001.png)
+
+# Feature App TV Maze 2.0
+
+Para a próxima feature está sendo implementado a alteração das principais Views (MainActivity e ShowDetailActivity) para utilização de Fragments para melhorar a experiência do usuário em smartphones e principalmente em tablets.
+
+* O código fonte se encontra na branch: implement_fragment_layout
+
+https://github.com/lemefe21/tv_maze_app_test/tree/implement_fragment_layout
+
+# Tablet screens
+
+![Scheme](images/tablet_001.png)
+
+![Scheme](images/tablet_002.png)
