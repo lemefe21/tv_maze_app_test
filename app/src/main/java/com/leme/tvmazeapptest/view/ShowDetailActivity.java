@@ -104,14 +104,14 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
 
         Picasso.with(this)
                 .load(imageUrl)
-                .placeholder(R.drawable.vintage_tv_2)
-                .error(R.drawable.vintage_tv_2)
+                .placeholder(R.drawable.default_poster)
+                .error(R.drawable.default_poster)
                 .into(mImageViewShowBackgroundPoster);
 
         Picasso.with(this)
                 .load(imageUrl)
-                .placeholder(R.drawable.vintage_tv_2)
-                .error(R.drawable.vintage_tv_2)
+                .placeholder(R.drawable.default_poster)
+                .error(R.drawable.default_poster)
                 .into(mImageViewShowPoster);
 
         mTextViewShowName.setText(show.getName());
