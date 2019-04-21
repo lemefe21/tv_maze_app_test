@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.text.Spanned;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -105,14 +104,14 @@ public class ShowDetailActivity extends AppCompatActivity implements ShowDetailC
 
         Picasso.with(this)
                 .load(imageUrl)
-                .placeholder(R.drawable.vintage_tv_2)
-                .error(R.drawable.vintage_tv_2)
+                .placeholder(R.drawable.default_poster)
+                .error(R.drawable.default_poster)
                 .into(mImageViewShowBackgroundPoster);
 
         Picasso.with(this)
                 .load(imageUrl)
-                .placeholder(R.drawable.vintage_tv_2)
-                .error(R.drawable.vintage_tv_2)
+                .placeholder(R.drawable.default_poster)
+                .error(R.drawable.default_poster)
                 .into(mImageViewShowPoster);
 
         mTextViewShowName.setText(show.getName());

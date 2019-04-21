@@ -7,7 +7,6 @@ import com.leme.tvmazeapptest.contract.ShowServiceContract;
 import com.leme.tvmazeapptest.model.entity.Show;
 import com.leme.tvmazeapptest.model.parcelable.ShowParcelable;
 import com.leme.tvmazeapptest.service.ShowService;
-import com.leme.tvmazeapptest.utils.ShowUtils;
 import com.leme.tvmazeapptest.view.MainActivity;
 import com.leme.tvmazeapptest.view.ShowDetailActivity;
 
@@ -35,11 +34,13 @@ public class MainPresenter implements MainContract.Presenter, ShowServiceContrac
     public void success(List<ShowParcelable> showList) {
         showParcelables = showList;
         view.setDataToRecyclerView(showParcelables, favoriteListShows);
+        view.hideProgress();
     }
 
     @Override
     public void error(Throwable throwable) {
         view.showError(FormatErrorUi(throwable));
+        view.hideProgress();
     }
 
     @Override
